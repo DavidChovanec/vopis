@@ -428,8 +428,11 @@ const hardWords = [
       const enemy = activeEnemies[i];
       
       // Vypočítame pozíciu hráča
-      const player = document.getElementById("player");
-      const playerX = player.offsetLeft + player.offsetWidth / 2 - 2;
+    const playerImg = document.querySelector("#player img");
+    const playerImgRect = playerImg.getBoundingClientRect();
+    const gameRect = gameArea.getBoundingClientRect();
+    const playerX = playerImgRect.left + playerImgRect.width / 2 - gameRect.left - 2;
+
       const playerY = gameArea.clientHeight - 60;
 
       // Vypočítame cieľovú pozíciu nepriateľa voči gameArea
