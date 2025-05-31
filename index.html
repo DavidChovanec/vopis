@@ -303,18 +303,24 @@ const hardWords = [
     function fireBullet() {
   const bullet = document.createElement("div");
   bullet.className = "bullet";
-  
+
   const player = document.getElementById("player");
-  const bulletWidth = 5; // rovnaké ako v CSS
-  const playerCenter = player.offsetLeft + player.offsetWidth / 2;
-  
-  const left = playerCenter - bulletWidth / 2; // presné vycentrovanie
-  bullet.style.left = `${left}px`;
+  const playerImg = player.querySelector("img");
+
+  const bulletWidth = 5;
+  const playerImgRect = playerImg.getBoundingClientRect();
+  const gameRect = gameArea.getBoundingClientRect();
+
+  // Získame stred obrázka voči gameArea
+  const bulletLeft = playerImgRect.left + playerImgRect.width / 2 - gameRect.left - bulletWidth / 2;
+
+  bullet.style.left = `${bulletLeft}px`;
   bullet.style.bottom = `60px`;
-  
+
   gameArea.appendChild(bullet);
   activeBullets.push(bullet);
 }
+
 
 
     function updateBullets() {
