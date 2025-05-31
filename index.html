@@ -201,7 +201,7 @@
     function getWordByLevel(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
-  if (level >= 11) pool = pool.concat(hardWords);
+  if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
@@ -211,7 +211,7 @@ const mediumWords = [
     function getWordByLevel(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
-  if (level >= 11) pool = pool.concat(hardWords);
+  if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
@@ -222,7 +222,7 @@ const hardWords = [
     function getWordByLevel(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
-  if (level >= 11) pool = pool.concat(hardWords);
+  if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
