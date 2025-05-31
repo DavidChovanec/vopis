@@ -241,6 +241,12 @@ const hardWords = [
 
     const gameArea = document.getElementById("game");
     const input = document.getElementById("textInput");
+
+    input.addEventListener('focus', function handleFocus() {
+        input.removeAttribute('placeholder');
+        input.removeEventListener('focus', handleFocus);
+    });
+
     const scoreboard = document.getElementById("scoreboard");
     const menu = document.getElementById("menu");
     const gameOverScreen = document.getElementById("gameOver");
