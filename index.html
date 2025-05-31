@@ -115,58 +115,58 @@
     }
     
     #history {
-  position: relative;
-  width: 400px;
-  height: 700px;
-  border: 2px solid white;
-  background-color: rgba(0, 0, 0, 0.8);
-  overflow-y: auto;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+        position: relative;
+        width: 400px;
+        height: 700px;
+        border: 2px solid white;
+        background-color: rgba(0, 0, 0, 0.8);
+        overflow-y: auto;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
 
-#history h1 {
-  margin-bottom: 20px;
-  font-size: 28px;
-}
+    #history h1 {
+        margin-bottom: 20px;
+        font-size: 28px;
+    }
 
-#historyList li {
-  background-color: rgba(255, 255, 255, 0.119);
-  border: 1px solid white;
-  border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 10px;
-  width: 100%;
-  text-align: left;
-  font-size: 18px;
-  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
-  transition: transform 0.2s ease;
-}
+    #historyList li {
+        background-color: rgba(255, 255, 255, 0.119);
+        border: 1px solid white;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 10px;
+        width: 100%;
+        text-align: left;
+        font-size: 18px;
+        box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
+        transition: transform 0.2s ease;
+    }
 
 
-#historyList li:hover {
-  transform: scale(1.02);
-  background-color: rgba(255, 255, 255, 0.15);
-}
+    #historyList li:hover {
+        transform: scale(1.02);
+        background-color: rgba(255, 255, 255, 0.15);
+    }
 
-#history button {
-  margin-top: 20px;
-  font-size: 20px;
-  padding: 10px 20px;
-  background-color: white;
-  color: black;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
+    #history button {
+        margin-top: 20px;
+        font-size: 20px;
+        padding: 10px 20px;
+        background-color: white;
+        color: black;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
 
-#history button:hover {
-  background-color: #ddd;
-}
+    #history button:hover {
+        background-color: #ddd;
+    }
 
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
@@ -301,15 +301,21 @@ const hardWords = [
     }
 
     function fireBullet() {
-      const bullet = document.createElement("div");
-      bullet.className = "bullet";
-      const player = document.getElementById("player");
-      const left = player.offsetLeft + player.offsetWidth / 2 - 2;
-      bullet.style.left = `${left}px`;
-      bullet.style.bottom = `60px`;
-      gameArea.appendChild(bullet);
-      activeBullets.push(bullet);
-    }
+  const bullet = document.createElement("div");
+  bullet.className = "bullet";
+  
+  const player = document.getElementById("player");
+  const bulletWidth = 5; // rovnaké ako v CSS
+  const playerCenter = player.offsetLeft + player.offsetWidth / 2;
+  
+  const left = playerCenter - bulletWidth / 2; // presné vycentrovanie
+  bullet.style.left = `${left}px`;
+  bullet.style.bottom = `60px`;
+  
+  gameArea.appendChild(bullet);
+  activeBullets.push(bullet);
+}
+
 
     function updateBullets() {
       for (let i = activeBullets.length - 1; i >= 0; i--) {
