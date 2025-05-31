@@ -426,6 +426,13 @@ const hardWords = [
     function checkInput() {
   const value = input.value.trim().toLowerCase();
 
+  const matchingEnemy = enemies.find(enemy => enemy.word.toLowerCase() === typedWord);
+
+  if (matchingEnemy) {
+    shootWord(); // Pôvodná funkcia, ktorá vystrelí a odstráni nepriateľa
+    input.value = ''; // Vyčisti input
+  }
+
   for (let i = 0; i < activeEnemies.length; i++) {
     if (activeEnemies[i].text === value) {
       const enemy = activeEnemies[i];
