@@ -306,6 +306,7 @@ const hardWords = [
 
   const player = document.getElementById("player");
   const playerImg = player.querySelector("img");
+  const playerX = playerImg.offsetLeft + playerImg.offsetWidth / 2 - 2;
 
   const bulletWidth = 5;
   const playerImgRect = playerImg.getBoundingClientRect();
