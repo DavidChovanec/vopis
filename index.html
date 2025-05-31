@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <title>VOPIS</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 
 
   <style>
@@ -19,16 +17,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      overflow: hidden;
     }
-
-    canvas {
-        width: 100%;
-        max-width: 100vw;
-        height: auto;
-        display: block;
-    }
-
     #game, #menu, #gameOver {
       position: relative;
       width: 400px;
@@ -175,28 +164,12 @@
   background-color: #ddd;
 }
 
-#game, #menu, #gameOver, #history {
-  position: relative;
-  width: 90vw;
-  height: 90vh;
-  max-width: 400px;
-  max-height: 700px;
-  border: 2px solid white;
-  background-color: rgba(0, 0, 0, 0.8);
-  overflow: hidden;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="menu">
-        <h1>SLOPIS</h1>
+        <h1>VOPIS</h1>
         <button onclick="startGame()">HRAŤ</button>
         <button onclick="showHistory()">História hier</button>
       </div>
@@ -228,7 +201,7 @@
     function getWordByLevel(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
-  if (level >= 11) pool = pool.concat(hardWords);
+  if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
@@ -238,7 +211,7 @@ const mediumWords = [
     function getWordByLevel(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
-  if (level >= 11) pool = pool.concat(hardWords);
+  if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
@@ -249,7 +222,7 @@ const hardWords = [
     function getWordByLevel(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
-  if (level >= 11) pool = pool.concat(hardWords);
+  if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
