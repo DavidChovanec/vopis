@@ -297,15 +297,23 @@ const hardWords = [
     }
 
     function fireBullet() {
-      const bullet = document.createElement("div");
-      bullet.className = "bullet";
-      const player = document.getElementById("player");
-      const left = player.offsetLeft + player.offsetWidth / 2 - 2;
-      bullet.style.left = `${left}px`;
-      bullet.style.bottom = `60px`;
-      gameArea.appendChild(bullet);
-      activeBullets.push(bullet);
-    }
+  const bullet = document.createElement("div");
+  bullet.className = "bullet";
+
+  const player = document.getElementById("player");
+  const playerRect = player.getBoundingClientRect();
+  const gameRect = gameArea.getBoundingClientRect();
+
+  // Vypočítaj pozíciu strely vzhľadom na ľavý okraj gameArea
+  const centerX = playerRect.left + playerRect.width / 2 - gameRect.left;
+
+  bullet.style.left = `${centerX - 2}px`;  // -2, ak má strela šírku 4px, pre vycentrovanie
+  bullet.style.bottom = `60px`;
+
+  gameArea.appendChild(bullet);
+  activeBullets.push(bullet);
+}
+
 
     function updateBullets() {
       for (let i = activeBullets.length - 1; i >= 0; i--) {
