@@ -724,7 +724,8 @@ function animateEnemiesAway() {
     let backgroundOffset = 0;
 
     function updateBackground() {
-        backgroundOffset += speed * 0.5; // čím vyššia rýchlosť, tým rýchlejší pohyb
+        backgroundOffset += backgroundSpeed;
+        //backgroundOffset += speed * 0.5; // ...................... čím vyššia rýchlosť, tým rýchlejší pohyb
         document.body.style.backgroundPosition = `0 ${backgroundOffset}px`;
         requestAnimationFrame(updateBackground); // neustále volanie
     }
