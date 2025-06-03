@@ -193,6 +193,25 @@
     animation: flyRight 0.8s forwards;
     }
 
+    @keyframes zoomInOut {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    20% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    }
+
+    #levelMessage {
+    animation: none; /* predvolené - vypne animáciu, kým ju nespustíme */
+    }
+
 
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
@@ -283,6 +302,12 @@ const hardWords = [
         animateEnemiesAway(); // Spusti animáciu nepriateľov
         const message = document.getElementById("levelMessage");
         message.textContent = text;
+
+        // Resetovanie animácie (aby sa mohla spustiť znova, ak sa volá viackrát)
+        message.style.animation = "none";
+        void message.offsetWidth; // reflow trikuje prehliadač
+        message.style.animation = "zoomInOut 0.8s ease-out";
+
         message.style.display = "block";
 
         setTimeout(() => {
