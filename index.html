@@ -171,6 +171,29 @@
         background-color: #ddd;
     }
 
+        @keyframes flyLeft {
+    to {
+        transform: translateX(-500px);
+        opacity: 0;
+    }
+    }
+
+    @keyframes flyRight {
+    to {
+        transform: translateX(500px);
+        opacity: 0;
+    }
+    }
+
+    .enemy.fly-left {
+    animation: flyLeft 0.8s forwards;
+    }
+
+    .enemy.fly-right {
+    animation: flyRight 0.8s forwards;
+    }
+
+
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
@@ -257,6 +280,7 @@ const hardWords = [
 
 
     function showLevelMessage(text) {
+        animateEnemiesAway(); // Spusti animáciu nepriateľov
         const message = document.getElementById("levelMessage");
         message.textContent = text;
         message.style.display = "block";
@@ -636,6 +660,28 @@ function drawChart() {
   });
 }
 
+function animateEnemiesAway() {
+  const center = gameArea.clientWidth / 2;
+  activeEnemies.forEach(enemyObj => {
+    const enemy = enemyObj.element;
+    const x = enemy.offsetLeft + enemy.offsetWidth / 2;
+    if (x < center) {
+      enemy.classList.add("fly-left");
+    } else {
+      enemy.classList.add("fly-right");
+    }
+  });
+
+  // Po animácii odstráni všetky lode
+  setTimeout(() => {
+    activeEnemies.forEach(e => {
+      if (gameArea.contains(e.element)) {
+        gameArea.removeChild(e.element);
+      }
+    });
+    activeEnemies.length = 0;
+  }, 850);
+}
 
 
 
