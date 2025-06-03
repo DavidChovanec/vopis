@@ -8,15 +8,19 @@
 
   <style>
     body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat #000;
-      overflow: hidden;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+        margin: 0;
+        font-family: 'Orbitron', sans-serif;
+        background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+        background-color: black;
+        background-size: auto;
+        overflow: hidden;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100dvh;
+
+        background-position: 0 0; /* na začiatku */
     }
 
 
@@ -212,6 +216,14 @@
     animation: none; /* predvolené - vypne animáciu, kým ju nespustíme */
     }
 
+    @keyframes scrollBackground {
+        0% {
+            background-position: 0 0;
+        }
+        100% {
+            background-position: 0 1000px;
+        }
+    }
 
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
