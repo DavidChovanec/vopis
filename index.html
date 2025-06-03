@@ -371,7 +371,7 @@ const hardWords = [
             if (score % 5 === 0) {
               level++;
               speed += 0.2;
-              if (spawnIntervalTime > 500) spawnIntervalTime -= 55;
+              if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
               clearInterval(spawnInterval);
               spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
             }
