@@ -312,7 +312,7 @@ const hardWords = [
 
         setTimeout(() => {
             message.style.display = "none";
-        }, 2500); // zobrazí sa na 2,5 sekundy
+        }, 3500); // zobrazí sa na 2,5 sekundy
     }
 
 
@@ -456,7 +456,7 @@ const hardWords = [
               spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
 
               // Zobrazenie správy podľa úrovne
-                if (level === 4 || level === 15) {
+                if (level === 4 || level === 7|| level === 15) {
                     showLevelMessage(getRandomLevelMessage());
                 }
             }
