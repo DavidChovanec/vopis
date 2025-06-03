@@ -237,6 +237,25 @@ const hardWords = [
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
+    const levelUpMessages = [
+        "Bol si skvelý, trochu pritvrdíme...",
+        "Výborne, ideš ďalej!",
+        "To bolo rýchle! Pridávame na obtiažnosti.",
+        "Skvelá práca! Ideme na vyšší level!",
+        "Teraz to začne byť zaujímavé!"
+        ];
+    let lastMessageIndex = -1;
+   
+    function getRandomLevelMessage() {
+        let index;
+            do {
+                index = Math.floor(Math.random() * levelUpMessages.length);
+            } while (index === lastMessageIndex);
+            lastMessageIndex = index;
+        return levelUpMessages[index];
+    }
+
+
     function showLevelMessage(text) {
         const message = document.getElementById("levelMessage");
         message.textContent = text;
@@ -389,7 +408,7 @@ const hardWords = [
 
               // Zobrazenie správy podľa úrovne
                 if (level === 4 || level === 15) {
-                    showLevelMessage("Bol si skvelý, trochu pritvrdíme...");
+                    showLevelMessage(getRandomLevelMessage());
                 }
             }
 
@@ -508,10 +527,14 @@ const hardWords = [
 
         if (score % 5 === 0) {
           level++;
-          speed += 0.3;
+          speed += 0.2;
           if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
           clearInterval(spawnInterval);
           spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
+
+          if (level === 4 || level === 15) {
+            showLevelMessage(getRandomLevelMessage());
+          }
         }
 
         updateScoreboard();
