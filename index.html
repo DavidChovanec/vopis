@@ -456,7 +456,7 @@ const hardWords = [
               spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
 
               // Zobrazenie správy podľa úrovne
-                if (level === 4 || level === 7|| level === 15) {
+              if ([4, 7, 15].includes(level)) {
                     showLevelMessage(getRandomLevelMessage());
                 }
             }
@@ -581,7 +581,7 @@ const hardWords = [
           clearInterval(spawnInterval);
           spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
 
-          if (level === 4 || level === 7 || level === 15) {
+          if ([4, 7, 15].includes(level)) {
             showLevelMessage(getRandomLevelMessage());
           }
         }
