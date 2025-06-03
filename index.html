@@ -16,8 +16,42 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 100dvh; /* zamedzí poskakovaniu pri otvorení klávesnice na mobile */
+      overscroll-behavior: none;
+      touch-action: manipulation;
     }
+
+    @media screen and (max-width: 500px) {
+  #game, #menu, #gameOver, #history {
+    width: 100vw;
+    height: 100dvh;
+    max-width: 100vw;
+    max-height: 100dvh;
+    border: none;
+    border-radius: 0;
+  }
+
+  #input input {
+    width: 90%;
+    font-size: 20px;
+    padding: 8px;
+  }
+
+  #scoreboard {
+    font-size: 16px;
+  }
+
+  #menu h1, #gameOver h1 {
+    font-size: 28px;
+  }
+
+  #menu button, #gameOver button, #history button {
+    font-size: 20px;
+    padding: 8px 16px;
+  }
+}
+
+    
     #game, #menu, #gameOver {
       position: relative;
       width: 400px;
@@ -113,7 +147,7 @@
         transform: scale(1.5);
       }
     }
-    
+     
     #history {
         position: relative;
         width: 400px;
