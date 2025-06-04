@@ -261,6 +261,8 @@
     let backgroundOffset = 0;
     let backgroundSpeed = 1.2; // počiatočná rýchlosť
     let targetBackgroundSpeed = 1.2;
+    let backgroundAnimationRunning = false;
+
 
     const easyWords = [
   "dom", "pes", "oko", "les", "hra", "kus", "lak", "typ", "vrt", "zub",
@@ -732,14 +734,19 @@ function animateEnemiesAway() {
     let backgroundOffset = 0;
 
     function updateBackground() {
-    // postupne znižujeme rýchlosť k cieľovej hodnote
-        backgroundSpeed += (targetBackgroundSpeed - backgroundSpeed) * 0.05;
+  if (!backgroundAnimationRunning) {
+    backgroundAnimationRunning = true;
+    requestAnimationFrame(scrollBackgroundStep);
+  }
+}
 
-        backgroundOffset += backgroundSpeed;
-        document.body.style.backgroundPosition = `0 ${backgroundOffset}px`;
+function scrollBackgroundStep() {
+  backgroundSpeed += (targetBackgroundSpeed - backgroundSpeed) * 0.05;
+  backgroundOffset += backgroundSpeed;
+  document.body.style.backgroundPosition = `0 ${backgroundOffset}px`;
 
-        requestAnimationFrame(updateBackground);
-    }
+  requestAnimationFrame(scrollBackgroundStep);
+}
     /*function updateBackground() {
         backgroundOffset += speed * 0.5; // čím vyššia rýchlosť, tým rýchlejší pohyb
         document.body.style.backgroundPosition = `0 ${backgroundOffset}px`;
