@@ -68,6 +68,21 @@
     #player img {
       width: 50%;
     }
+    @keyframes playerIntro {
+        from {
+            transform: translate(-50%, 200px); /* začína pod obrazovkou */
+            opacity: 0;
+        }
+        to {
+            transform: translate(-50%, 0); /* končí na svojej pozícii */
+            opacity: 1;
+        }
+        }
+
+#player.animate-intro {
+  animation: playerIntro 1s ease-out forwards;
+}
+
     #input {
       position: absolute;
       bottom: 10px;
@@ -377,6 +392,17 @@ const hardWords = [
       input.value = "";
       input.focus(); // rovno pises 
       updateScoreboard();
+      const player = document.getElementById("player");
+      player.classList.remove("animate-intro"); // reset
+
+      // skryj loď a priprav animáciu
+    player.style.opacity = "0";
+
+      // trigger animácie s oneskorením, aby DOM mal čas
+      setTimeout(() => {
+          player.classList.add("animate-intro");
+          player.style.opacity = "1";
+      }, 100);
       spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
       moveInterval = setInterval(updateEnemies, 50);
       bulletInterval = setInterval(updateBullets, 20);
