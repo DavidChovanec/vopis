@@ -548,13 +548,9 @@ const hardWords = [
       scoreboard.textContent = `Skóre: ${score} | Úroveň: ${level}`;
     }
 
-    input.addEventListener("input", function () {
-        checkInput();
-    });
-
-    /*input.addEventListener("keydown", function (e) {
+    input.addEventListener("keydown", function (e) {
       if (e.key === "Enter") checkInput();
-    });*/
+    });
 
     document.addEventListener("keydown", function (e) {
       if (e.code === "Space") {
@@ -642,9 +638,6 @@ const hardWords = [
         updateScoreboard();
       }, duration);
 
-      // 💥 Vymažeme textový input len pri zásahu
-      input.value = "";
-      
       break;
     }
   }
