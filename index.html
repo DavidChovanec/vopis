@@ -262,6 +262,12 @@
     let backgroundSpeed = 1.2; // počiatočná rýchlosť
     let targetBackgroundSpeed = 1.2;
     let backgroundAnimationRunning = false;
+    
+    //klik na plochu = autofocus
+    gameArea.addEventListener("click", () => {
+        input.focus();
+    });
+
 
 
     const easyWords = [
@@ -526,6 +532,7 @@ const hardWords = [
         checkInput();
     });
 
+
     /*input.addEventListener("keydown", function (e) {
       if (e.key === "Enter") checkInput();
     });*/
@@ -538,6 +545,9 @@ const hardWords = [
     });
 
     function checkInput() {
+        input.value = "";
+        input.focus();
+
   const value = input.value.trim().toLowerCase();
 
   for (let i = 0; i < activeEnemies.length; i++) {
