@@ -258,6 +258,10 @@
   </div>
 
   <script>
+    let backgroundOffset = 0;
+    let backgroundSpeed = 1.2; // počiatočná rýchlosť
+    let targetBackgroundSpeed = 1.2;
+
     const easyWords = [
   "dom", "pes", "oko", "les", "hra", "kus", "lak", "typ", "vrt", "zub",
   "dar", "lup", "mat", "nos"
@@ -358,7 +362,9 @@ const hardWords = [
     const activeBullets = [];
 
     function startGame() {
-        updateBackground();
+      targetBackgroundSpeed = 1.2;
+      backgroundSpeed = 0; // začneme pomaly zrýchľovať (voliteľné)
+      updateBackground();
       menu.style.display = "none";
       gameOverScreen.style.display = "none";
       gameArea.style.display = "flex";
@@ -500,6 +506,7 @@ const hardWords = [
       finalLevel.textContent = "Tvoja úroveň: " + level;
       saveGameToHistory(score, level);
       gameOverScreen.style.display = "flex";
+      targetBackgroundSpeed = 0; // pozadie sa postupne zastaví
     }
 
     function backToMenu() {
@@ -725,11 +732,20 @@ function animateEnemiesAway() {
     let backgroundOffset = 0;
 
     function updateBackground() {
+    // postupne znižujeme rýchlosť k cieľovej hodnote
+        backgroundSpeed += (targetBackgroundSpeed - backgroundSpeed) * 0.05;
+
+        backgroundOffset += backgroundSpeed;
+        document.body.style.backgroundPosition = `0 ${backgroundOffset}px`;
+
+        requestAnimationFrame(updateBackground);
+    }
+    /*function updateBackground() {
         backgroundOffset += speed * 0.5; // čím vyššia rýchlosť, tým rýchlejší pohyb
         document.body.style.backgroundPosition = `0 ${backgroundOffset}px`;
         requestAnimationFrame(updateBackground); // neustále volanie
     }
-
+*/
 
 
 
