@@ -741,7 +741,7 @@ function animateEnemiesAway() {
 }
 
 function scrollBackgroundStep() {
-  backgroundSpeed += (targetBackgroundSpeed - backgroundSpeed) * 0.05;
+  backgroundSpeed += (targetBackgroundSpeed - backgroundSpeed) * 0.02;
   backgroundOffset += backgroundSpeed;
   document.body.style.backgroundPosition = `0 ${backgroundOffset}px`;
 
