@@ -367,6 +367,7 @@ const hardWords = [
       speed = 1.0;
       spawnIntervalTime = 3500;
       input.value = "";
+      input.focus(); // rovno pises 
       updateScoreboard();
       spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
       moveInterval = setInterval(updateEnemies, 50);
