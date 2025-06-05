@@ -284,7 +284,7 @@
 </head>
 <body>
       
-    <div id="menu">
+    <div id="menu" style="display: flex;">
         <h1>VOPIS</h1>
         <button onclick="startGame()">HRAŤ</button>
         <button onclick="showHistory()">História hier</button>
@@ -322,6 +322,7 @@
   </div>
 
   <script>
+    console.log("Skript sa načítal");
     let backgroundOffset = 0;
     let backgroundSpeed = 1.2; // počiatočná rýchlosť
     let targetBackgroundSpeed = 1.2;
