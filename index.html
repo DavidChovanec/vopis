@@ -307,11 +307,10 @@
 }
 
 #difficultyScreen {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 400px;
   height: 700px;
+  border: 2px solid white;
   background-color: rgba(0, 0, 0, 0.95);
   display: none;
   flex-direction: column;
@@ -321,12 +320,14 @@
   z-index: 15;
   color: #00ffff;
   text-align: center;
+  margin: auto; 
 }
 
 #difficultyScreen h2 {
-  font-size: 26px;
+    font-size: 28px;
   margin-bottom: 40px;
   text-shadow: 2px 2px black;
+  color: #00ffff;
 }
 
 .difficulty-options {
