@@ -872,7 +872,14 @@ function startGameWithDifficulty(difficulty) {
 
   startGame();
 }
-
+function toggleDifficultySettings() {
+  const btns = document.getElementById("difficultyButtons");
+  if (btns.style.display === "none") {
+    btns.style.display = "flex";
+  } else {
+    btns.style.display = "none";
+  }
+}
 
 
     menu.style.display = "flex";
