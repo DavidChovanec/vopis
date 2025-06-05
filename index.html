@@ -285,6 +285,29 @@
         cursor: pointer;
     }
 
+    #difficultySettings h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #00ffff;
+  margin-bottom: 10px;
+}
+
+.difficulty-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  color: #00ffff;
+  background: transparent;
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.difficulty-btn:hover,
+.difficulty-btn.selected {
+  background: #00ffff;
+  color: black;
+}
 
 
   </style>
@@ -297,7 +320,19 @@
         <button onclick="startGame()">HRAŤ</button>
         <button onclick="showHistory()">História hier</button>
         <div id="settingsIcon" onclick="openSettings()">⚙️</div>
+        <button onclick="showDifficultySettings()">Nastaviť obtiažnosť</button>
       </div>
+
+      <div id="difficultySettings" style="display: none; flex-direction: column; align-items: center; gap: 20px;">
+        <h2>Vyber si obtiažnosť</h2>
+        <div style="display: flex; gap: 15px;">
+          <button class="difficulty-btn" data-diff="easy">Ľahká</button>
+          <button class="difficulty-btn" data-diff="normal">Normálna</button>
+          <button class="difficulty-btn" data-diff="hard">Ťažká</button>
+        </div>
+        <button onclick="backToMenuFromDifficulty()">Späť</button>
+      </div>
+      
 
       <div id="settingsPanel" style="display:none;" class="panel">
         <h2>Nastavenie</h2>
@@ -872,6 +907,29 @@ function scrollBackgroundStep() {
         document.getElementById("settings").style.display = "none";
         menu.style.display = "flex";
     }
+
+    let selectedDifficulty = null;
+
+// zobraz nastavenia obtiažnosti
+function showDifficultySettings() {
+  menu.style.display = "none";
+  document.getElementById("difficultySettings").style.display = "flex";
+}
+
+// návrat do menu
+function backToMenuFromDifficulty() {
+  document.getElementById("difficultySettings").style.display = "none";
+  menu.style.display = "flex";
+}
+
+// výber obtiažnosti klikom
+document.querySelectorAll(".difficulty-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    selectedDifficulty = btn.dataset.diff;
+    document.querySelectorAll(".difficulty-btn").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+  });
+});
 
 
 
