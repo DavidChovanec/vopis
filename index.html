@@ -2,29 +2,22 @@
 <html lang="sk">
 <head>
   <meta charset="UTF-8" />
-  <title>VOPIS</title>
+  <title>ZType SK – Strieľajúca loď</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
   <style>
     body {
-        margin: 0;
-        font-family: 'Orbitron', sans-serif;
-        background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
-        background-color: black;
-        background-size: auto;
-        overflow: hidden;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100dvh;
-
-        background-position: 0 0; /* na začiatku */
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat #000;
+      overflow: hidden;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-
-
-    
     #game, #menu, #gameOver {
       position: relative;
       width: 400px;
@@ -53,7 +46,6 @@
       width: 5px;
       height: 20px;
       background: red;
-      position: absolute;
     }
     #player {
       position: absolute;
@@ -61,28 +53,10 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 2; /* vyššie než input */
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
     #player img {
-      width: 50%;
+      width: 75px;
     }
-    @keyframes playerIntro {
-        from {
-            transform: translate(-50%, 200px); /* začína pod obrazovkou */
-            opacity: 0;
-        }
-        to {
-            transform: translate(-50%, 0); /* končí na svojej pozícii */
-            opacity: 1;
-        }
-        }
-
-#player.animate-intro {
-  animation: playerIntro 1s ease-out forwards;
-}
-
     #input {
       position: absolute;
       bottom: 10px;
@@ -135,244 +109,70 @@
         transform: scale(1.5);
       }
     }
-     
+    
     #history {
-        position: relative;
-        width: 400px;
-        height: 700px;
-        border: 2px solid white;
-        background-color: rgba(0, 0, 0, 0.8);
-        overflow-y: auto;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+  position: relative;
+  width: 400px;
+  height: 700px;
+  border: 2px solid white;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow-y: auto;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 
-    #history h1 {
-        margin-bottom: 20px;
-        font-size: 28px;
-    }
+#history h1 {
+  margin-bottom: 20px;
+  font-size: 28px;
+}
 
-    #historyList li {
-        background-color: rgba(255, 255, 255, 0.119);
-        border: 1px solid white;
-        border-radius: 12px;
-        padding: 15px;
-        margin-bottom: 10px;
-        width: 100%;
-        text-align: left;
-        font-size: 18px;
-        box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
-        transition: transform 0.2s ease;
-    }
-
-
-    #historyList li:hover {
-        transform: scale(1.02);
-        background-color: rgba(255, 255, 255, 0.15);
-    }
-
-    #history button {
-        margin-top: 20px;
-        font-size: 20px;
-        padding: 10px 20px;
-        background-color: white;
-        color: black;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-    }
-
-    #history button:hover {
-        background-color: #ddd;
-    }
-
-        @keyframes flyLeft {
-    to {
-        transform: translateX(-500px);
-        opacity: 0;
-    }
-    }
-
-    @keyframes flyRight {
-    to {
-        transform: translateX(500px);
-        opacity: 0;
-    }
-    }
-
-    .enemy.fly-left {
-    animation: flyLeft 0.8s forwards;
-    }
-
-    .enemy.fly-right {
-    animation: flyRight 0.8s forwards;
-    }
-
-    @keyframes zoomInOut {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-    20% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    }
-
-    #levelMessage {
-    animation: none; /* predvolené - vypne animáciu, kým ju nespustíme */
-    }
-
-    @keyframes scrollBackground {
-        0% {
-            background-position: 0 0;
-        }
-        100% {
-            background-position: 0 1000px;
-        }
-    }
-    #settingsIcon {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 28px;
-        cursor: pointer;
-        z-index: 10;
-        user-select: none;
-        transition: transform 0.2s ease;
-    }
-    #settingsIcon:hover {
-        transform: rotate(30deg);
-    }
-    .panel {
-        position: absolute;
-        width: 300px;
-        height: 200px;
-        background: rgba(0, 0, 0, 0.9);
-        color: white;
-        border: 2px solid white;
-        border-radius: 10px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 20;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        }
-    .panel select {
-        font-size: 18px;
-        padding: 5px;
-        border-radius: 5px;
-    }
-    .panel button {
-        margin-top: 10px;
-        font-size: 18px;
-        padding: 5px 15px;
-        border-radius: 8px;
-        background-color: white;
-        color: black;
-        cursor: pointer;
-    }
-
-    #difficultySettings h2 {
-  font-family: 'Orbitron', sans-serif;
-  color: #00ffff;
+#historyList li {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid white;
+  border-radius: 12px;
+  padding: 15px;
   margin-bottom: 10px;
+  width: 100%;
+  text-align: left;
+  font-size: 18px;
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s ease;
 }
 
-.difficulty-btn {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 18px;
-  color: #00ffff;
-  background: transparent;
-  border: 2px solid #00ffff;
-  border-radius: 10px;
+
+#historyList li:hover {
+  transform: scale(1.02);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+#history button {
+  margin-top: 20px;
+  font-size: 20px;
   padding: 10px 20px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-.difficulty-btn:hover,
-.difficulty-btn.selected {
-  background: #00ffff;
+  background-color: white;
   color: black;
-}
-#difficultySettings button {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 18px;
-  padding: 10px 16px;
-  border: 2px solid #00ffff;
-  background-color: transparent;
-  color: #00ffff;
-  border-radius: 8px;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.2s;
-}
-#difficultySettings button:hover {
-  background-color: rgba(0, 255, 255, 0.2);
+  transition: background-color 0.2s ease;
 }
 
-
+#history button:hover {
+  background-color: #ddd;
+}
 
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
 <body>
-      
     <div id="menu">
-        <h1>VOPIS</h1>
+        <h1>SLOPIS</h1>
         <button onclick="startGame()">HRAŤ</button>
-        <button onclick="showHistory()">História hier</button> 
-        
-        <div id="settingsIcon" onclick="openSettings()">⚙️</div>
-        </div>
-    
-        <div id="settingsPanel" style="display:none;" class="panel">
-            <h2>Nastavenie</h2>
-            <label for="difficulty">Obtiažnosť:</label>
-            <select id="difficulty">
-                <option value="easy">Ľahká</option>
-                <option value="normal" selected>Normálna</option>
-                <option value="hard">Ťažká</option>
-            </select>
-            <button onclick="closeSettings()">Späť</button>
-        </div>
-
-    </div>
-
-      <div id="difficultySettings" style="display: none; flex-direction: column; align-items: center; gap: 20px;">
-        <h2>Vyber si obtiažnosť</h2>
-        <div style="display: flex; gap: 15px;">
-          <button class="difficulty-btn" data-diff="easy">Ľahká</button>
-          <button class="difficulty-btn" data-diff="normal">Normálna</button>
-          <button class="difficulty-btn" data-diff="hard">Ťažká</button>
-        </div>
-        <button onclick="backToMenuFromDifficulty()">Späť</button>
+        <button onclick="showHistory()">História hier</button>
       </div>
-      
-
-      <div id="settingsPanel" style="display:none;" class="panel">
-        <h2>Nastavenie</h2>
-        <label for="difficulty">Obtiažnosť:</label>
-        <select id="difficulty">
-          <option value="easy">Ľahká</option>
-          <option value="normal" selected>Normálna</option>
-          <option value="hard">Ťažká</option>
-        </select>
-        <button onclick="closeSettings()">Späť</button>
-      </div>
-      
       
       <div id="history">
         <ul id="historyList" style="display: none;"></ul>
@@ -382,9 +182,8 @@
       
 
   <div id="game">
-    <div id="levelMessage" style="display:none; position:absolute; top: 40%; width:100%; text-align:center; font-size: 24px; color: #00ffcc; font-weight: bold; text-shadow: 2px 2px black; z-index: 10;"></div>
     <div id="scoreboard">Skóre: 0 | Úroveň: 1</div>
-    <div id="input"><input type="text" id="textInput" placeholder="klikni a píš" autofocus /></div>
+    <div id="input"><input type="text" id="textInput" autofocus /></div>
     <div id="player"><img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" alt="hráčova loď"></div>
   </div>
 
@@ -396,81 +195,36 @@
   </div>
 
   <script>
-    let backgroundOffset = 0;
-    let backgroundSpeed = 1.2; // počiatočná rýchlosť
-    let targetBackgroundSpeed = 1.2;
-    let backgroundAnimationRunning = false;
-
-
     const easyWords = [
-  "dom", "pes", "oko", "les", "hra", "kus", "lak", "typ", "vrt", "zub",
-  "dar", "lup", "mat", "nos"
+  "oko", "ujo", "ona", "pes", "dom", "rok", "rys", "ves", "osa", "les", "hra"
     ];
     function getWordByLevel(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
-  if (level >= 15) pool = pool.concat(hardWords);
+  if (level >= 11) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
 const mediumWords = [
-  "ruka", "lampa", "slovo", "voda", "more", "kvet", "hory", "sirup", "mlieko", "list","strom", "vrece", "kabel", "kniha", "oblak", "svetlo", 
-  "zmrzka", "tanier", "krava", "lopta", "lopata", "slon", "lano"
+  "ruka", "lampa", "slovo", "voda", "more", "kvet", "hory", "sirup", "mlieko", "list"
     ];
     function getWordByLevel(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
-  if (level >= 15) pool = pool.concat(hardWords);
+  if (level >= 11) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
 const hardWords = [
-  "mačka", "kamarat", "kniha", "cesta", "chlieb", "taburet", "počasie", "šarkan", "autobus",
+  "slon", "mačka", "kamarat", "kniha", "cesta", "chlieb", "taburet", "počasie", "šarkan", "autobus",
   "bublina", "špagety", "žubrienka", "raketa", "dinosaurus", "kolobežka", "bublinka"
     ];
     function getWordByLevel(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
-  if (level >= 15) pool = pool.concat(hardWords);
+  if (level >= 11) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 }
-
-    const levelUpMessages = [
-        "Bol si skvelý, trochu pritvrdíme...",
-        "Výborne, ideš ďalej!",
-        "To bolo rýchle! Pridávame na obtiažnosti.",
-        "Skvelá práca! Ideme na vyšší level!",
-        "Teraz to začne byť zaujímavé!"
-        ];
-    let lastMessageIndex = -1;
-   
-    function getRandomLevelMessage() {
-        let index;
-            do {
-                index = Math.floor(Math.random() * levelUpMessages.length);
-            } while (index === lastMessageIndex);
-            lastMessageIndex = index;
-        return levelUpMessages[index];
-    }
-
-
-    function showLevelMessage(text) {
-        animateEnemiesAway(); // Spusti animáciu nepriateľov
-        const message = document.getElementById("levelMessage");
-        message.textContent = text;
-
-        // Resetovanie animácie (aby sa mohla spustiť znova, ak sa volá viackrát)
-        message.style.animation = "none";
-        void message.offsetWidth; // reflow trikuje prehliadač
-        message.style.animation = "zoomInOut 0.8s ease-out";
-
-        message.style.display = "block";
-
-        setTimeout(() => {
-            message.style.display = "none";
-        }, 3500); // zobrazí sa na 2,5 sekundy
-    }
-
 
     const shipImages = [
       "https://cdn-icons-png.flaticon.com/512/3306/3306604.png",
@@ -486,12 +240,6 @@ const hardWords = [
 
     const gameArea = document.getElementById("game");
     const input = document.getElementById("textInput");
-
-    input.addEventListener('focus', function handleFocus() {
-        input.removeAttribute('placeholder');
-        input.removeEventListener('focus', handleFocus);
-    });
-
     const scoreboard = document.getElementById("scoreboard");
     const menu = document.getElementById("menu");
     const gameOverScreen = document.getElementById("gameOver");
@@ -502,46 +250,15 @@ const hardWords = [
     const activeBullets = [];
 
     function startGame() {
-      targetBackgroundSpeed = 1.2;
-      backgroundSpeed = 0; // začneme pomaly zrýchľovať (voliteľné)
-      updateBackground();
       menu.style.display = "none";
       gameOverScreen.style.display = "none";
       gameArea.style.display = "flex";
       level = 1;
       score = 0;
       speed = 1.0;
-      const difficulty = document.getElementById("difficulty").value;
-
-      if (selectedDifficulty === "easy") {
-            spawnIntervalTime = 4000;
-            speed = 0.8;
-      } else if (selectedDifficulty === "normal") {
-            spawnIntervalTime = 3000;
-            speed = 1.0;
-      } else if (selectedDifficulty === "hard") {
-            spawnIntervalTime = 2000;
-            speed = 1.3;
-      } else {
-            spawnIntervalTime = 3500;
-            speed = 1.0;
-      }
-
-      //spawnIntervalTime = 3500;
+      spawnIntervalTime = 2000;
       input.value = "";
-      input.focus(); // rovno pises 
       updateScoreboard();
-      const player = document.getElementById("player");
-      player.classList.remove("animate-intro"); // reset
-
-      // skryj loď a priprav animáciu
-    player.style.opacity = "0";
-
-      // trigger animácie s oneskorením, aby DOM mal čas
-      setTimeout(() => {
-          player.classList.add("animate-intro");
-          player.style.opacity = "1";
-      }, 100);
       spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
       moveInterval = setInterval(updateEnemies, 50);
       bulletInterval = setInterval(updateBullets, 20);
@@ -573,28 +290,15 @@ const hardWords = [
     }
 
     function fireBullet() {
-  const bullet = document.createElement("div");
-  bullet.className = "bullet";
-
-  const player = document.getElementById("player");
-  const playerImg = player.querySelector("img");
-  const playerX = playerImg.offsetLeft + playerImg.offsetWidth / 2 - 2;
-
-  const bulletWidth = 5;
-  const playerImgRect = playerImg.getBoundingClientRect();
-  const gameRect = gameArea.getBoundingClientRect();
-
-  // Získame stred obrázka voči gameArea
-  const bulletLeft = playerImgRect.left + playerImgRect.width / 2 - gameRect.left - bulletWidth / 2;
-
-  bullet.style.left = `${bulletLeft}px`;
-  bullet.style.bottom = `60px`;
-
-  gameArea.appendChild(bullet);
-  activeBullets.push(bullet);
-}
-
-
+      const bullet = document.createElement("div");
+      bullet.className = "bullet";
+      const player = document.getElementById("player");
+      const left = player.offsetLeft + player.offsetWidth / 2 - 2;
+      bullet.style.left = `${left}px`;
+      bullet.style.bottom = `60px`;
+      gameArea.appendChild(bullet);
+      activeBullets.push(bullet);
+    }
 
     function updateBullets() {
       for (let i = activeBullets.length - 1; i >= 0; i--) {
@@ -637,15 +341,10 @@ const hardWords = [
 
             if (score % 5 === 0) {
               level++;
-              speed += 0.2;
-              if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
+              speed += 0.3;
+              if (spawnIntervalTime > 500) spawnIntervalTime -= 75;
               clearInterval(spawnInterval);
               spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
-
-              // Zobrazenie správy podľa úrovne
-              if ([4, 7, 15].includes(level)) {
-                    showLevelMessage(getRandomLevelMessage());
-                }
             }
 
             updateScoreboard();
@@ -673,7 +372,6 @@ const hardWords = [
       finalLevel.textContent = "Tvoja úroveň: " + level;
       saveGameToHistory(score, level);
       gameOverScreen.style.display = "flex";
-      targetBackgroundSpeed = 0; // pozadie sa postupne zastaví
     }
 
     function backToMenu() {
@@ -706,11 +404,8 @@ const hardWords = [
       const enemy = activeEnemies[i];
       
       // Vypočítame pozíciu hráča
-    const playerImg = document.querySelector("#player img");
-    const playerImgRect = playerImg.getBoundingClientRect();
-    const gameRect = gameArea.getBoundingClientRect();
-    const playerX = playerImgRect.left + playerImgRect.width / 2 - gameRect.left - 2;
-
+      const player = document.getElementById("player");
+      const playerX = player.offsetLeft + player.offsetWidth / 2 - 2;
       const playerY = gameArea.clientHeight - 60;
 
       // Vypočítame cieľovú pozíciu nepriateľa voči gameArea
@@ -764,14 +459,10 @@ const hardWords = [
 
         if (score % 5 === 0) {
           level++;
-          speed += 0.2;
+          speed += 0.3;
           if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
           clearInterval(spawnInterval);
           spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
-
-          if ([4, 7, 15].includes(level)) {
-            showLevelMessage(getRandomLevelMessage());
-          }
         }
 
         updateScoreboard();
@@ -844,8 +535,7 @@ function drawChart() {
         label: 'Skóre (správne slová)',
         data: scores,
         borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)', // výplň pod krivkou
-        fill: true, // aktivuje výplň
+        backgroundColor: 'transparent',
         borderWidth: 2,
         tension: 0.3,
         pointBackgroundColor: 'rgba(75, 192, 192, 1)',
@@ -873,87 +563,8 @@ function drawChart() {
   });
 }
 
-function animateEnemiesAway() {
-  const center = gameArea.clientWidth / 2;
-  activeEnemies.forEach(enemyObj => {
-    const enemy = enemyObj.element;
-    const x = enemy.offsetLeft + enemy.offsetWidth / 2;
-    if (x < center) {
-      enemy.classList.add("fly-left");
-    } else {
-      enemy.classList.add("fly-right");
-    }
-  });
 
-  // Po animácii odstráni všetky lode
-  setTimeout(() => {
-    activeEnemies.forEach(e => {
-      if (gameArea.contains(e.element)) {
-        gameArea.removeChild(e.element);
-      }
-    });
-    activeEnemies.length = 0;
-  }, 850);
-}
 
-    //let backgroundOffset = 0;
-
-    function updateBackground() {
-  if (!backgroundAnimationRunning) {
-    backgroundAnimationRunning = true;
-    requestAnimationFrame(scrollBackgroundStep);
-  }
-}
-
-function scrollBackgroundStep() {
-  backgroundSpeed += (targetBackgroundSpeed - backgroundSpeed) * 0.02;
-  backgroundOffset += backgroundSpeed;
-  document.body.style.backgroundPosition = `0 ${backgroundOffset}px`;
-
-  requestAnimationFrame(scrollBackgroundStep);
-}
-    /*function updateBackground() {
-        backgroundOffset += speed * 0.5; // čím vyššia rýchlosť, tým rýchlejší pohyb
-        document.body.style.backgroundPosition = `0 ${backgroundOffset}px`;
-        requestAnimationFrame(updateBackground); // neustále volanie
-    }
-*/
-
-    function openSettings() {
-        document.getElementById("settingsPanel").style.display = "flex";
-        menu.style.display = "none";
-    }
-
-    function closeSettings() {
-        document.getElementById("settingsPanel").style.display = "none";
-        menu.style.display = "flex";
-    }
-
-    function saveSettings() {
-        selectedDifficulty = document.getElementById("difficulty").value;
-        document.getElementById("settings").style.display = "none";
-        menu.style.display = "flex";
-    }
-
-    let selectedDifficulty = null;
-
-function showDifficultySettings() {
-  menu.style.display = "none";
-  document.getElementById("difficultySettings").style.display = "flex";
-}
-
-function backToMenuFromDifficulty() {
-  document.getElementById("difficultySettings").style.display = "none";
-  menu.style.display = "flex";
-}
-
-document.querySelectorAll(".difficulty-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    selectedDifficulty = btn.dataset.diff;
-    document.querySelectorAll(".difficulty-btn").forEach(b => b.classList.remove("selected"));
-    btn.classList.add("selected");
-  });
-});
 
 
 
