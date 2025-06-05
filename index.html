@@ -332,6 +332,38 @@
   "dom", "pes", "oko", "les", "hra", "kus", "lak", "typ", "vrt", "zub",
   "dar", "lup", "mat", "nos"
     ];
+    const mediumWords = [
+  "ruka", "lampa", "slovo", "voda", "more", "kvet", "hory", "sirup", "mlieko", "list","strom", "vrece", "kabel", "kniha", "oblak", "svetlo", 
+  "zmrzka", "tanier", "krava", "lopta", "lopata", "slon", "lano"
+    ];
+    const hardWords = [
+  "mačka", "kamarat", "kniha", "cesta", "chlieb", "taburet", "počasie", "šarkan", "autobus",
+  "bublina", "špagety", "žubrienka", "raketa", "dinosaurus", "kolobežka", "bublinka"
+    ];
+    function getWordByLevel(level) {
+  if (selectedDifficulty === 'easy') {
+    return easyWords[Math.floor(Math.random() * easyWords.length)];
+  } else if (selectedDifficulty === 'medium') {
+    let pool = [...easyWords, ...mediumWords];
+    return pool[Math.floor(Math.random() * pool.length)];
+  } else if (selectedDifficulty === 'hard') {
+    let pool = [...mediumWords, ...hardWords];
+    return pool[Math.floor(Math.random() * pool.length)];
+  } else {
+    // Pôvodné správanie, ak si hráč nevybral obtiažnosť
+    let pool = [...easyWords];
+    if (level >= 4) pool = pool.concat(mediumWords);
+    if (level >= 15) pool = pool.concat(hardWords);
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+}
+
+
+/*
+    const easyWords = [
+  "dom", "pes", "oko", "les", "hra", "kus", "lak", "typ", "vrt", "zub",
+  "dar", "lup", "mat", "nos"
+    ];
     function getWordByLevel(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
@@ -360,7 +392,7 @@ const hardWords = [
   if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 }
-
+*/
     const levelUpMessages = [
         "Bol si skvelý, trochu pritvrdíme...",
         "Výborne, ideš ďalej!",
