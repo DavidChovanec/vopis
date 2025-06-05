@@ -22,6 +22,45 @@
 
         background-position: 0 0; /* na začiatku */
     }
+    #settingsIcon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 20;
+    }
+
+    #difficultyMenu {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    }
+
+    .difficulty-buttons {
+    display: flex;
+    gap: 10px;
+    }
+
+    .difficulty-button {
+    background: transparent;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    font-family: 'Orbitron', sans-serif;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    }
+
+    .difficulty-button:hover {
+    background: rgba(0, 255, 255, 0.2);
+    }
+
 
 
     
@@ -249,6 +288,16 @@
         <h1>VOPIS</h1>
         <button onclick="startGame()">HRAŤ</button>
         <button onclick="showHistory()">História hier</button>
+        <div id="settingsIcon" onclick="toggleDifficultyMenu()">⚙️</div>
+
+        <div id="difficultyMenu">
+        <div class="difficulty-buttons">
+            <button class="difficulty-button" onclick="startGameWithDifficulty('easy')">Ľahká</button>
+            <button class="difficulty-button" onclick="startGameWithDifficulty('medium')">Stredná</button>
+            <button class="difficulty-button" onclick="startGameWithDifficulty('hard')">Ťažká</button>
+        </div>
+        </div>
+
       </div>
       
       <div id="history">
@@ -379,6 +428,15 @@ const hardWords = [
     const activeBullets = [];
 
     function startGame() {
+        if (!selectedDifficulty) {
+    speed = 1.0;
+    spawnIntervalTime = 3500;
+    getWordByLevel = function (level) {
+      let pool = [...easyWords];
+      if (level >= 4) pool = pool.concat(mediumWords);
+      if (level >= 15) pool = pool.concat(hardWords);
+      return pool[Math.floor(Math.random() * pool.length)];
+    };
       targetBackgroundSpeed = 1.2;
       backgroundSpeed = 0; // začneme pomaly zrýchľovať (voliteľné)
       updateBackground();
@@ -779,6 +837,41 @@ function scrollBackgroundStep() {
         requestAnimationFrame(updateBackground); // neustále volanie
     }
 */
+
+let selectedDifficulty = null;
+
+function toggleDifficultyMenu() {
+  const menu = document.getElementById("difficultyMenu");
+  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+
+function startGameWithDifficulty(difficulty) {
+  selectedDifficulty = difficulty;
+
+  if (difficulty === 'easy') {
+    speed = 0.8;
+    spawnIntervalTime = 4000;
+    getWordByLevel = function () {
+      return easyWords[Math.floor(Math.random() * easyWords.length)];
+    };
+  } else if (difficulty === 'medium') {
+    speed = 1.4;
+    spawnIntervalTime = 2500;
+    getWordByLevel = function (level) {
+      let pool = [...easyWords, ...mediumWords];
+      return pool[Math.floor(Math.random() * pool.length)];
+    };
+  } else if (difficulty === 'hard') {
+    speed = 1.8;
+    spawnIntervalTime = 1800;
+    getWordByLevel = function (level) {
+      let pool = [...mediumWords, ...hardWords];
+      return pool[Math.floor(Math.random() * pool.length)];
+    };
+  }
+
+  startGame();
+}
 
 
 
