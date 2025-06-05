@@ -23,7 +23,9 @@
         background-position: 0 0; /* na začiatku */
     }
 
-
+    #menu {
+  position: relative; /* umožní absolútnu pozíciu potomkom */
+}
     
     #game, #menu, #gameOver {
       position: relative;
@@ -253,9 +255,15 @@
         transition: transform 0.2s ease;
     }
 
+    #settingsButton svg {
+  stroke: #00ffff; /* tyrkysový obrys */
+  width: 28px;
+  height: 28px;
+}
+
 
     #settingsButton:hover {
-        transform: scale(1.1);
+        background-color: rgba(0, 255, 255, 0.1); /* jemný efekt */
     }
 
     #settingsModal {
