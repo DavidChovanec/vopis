@@ -306,6 +306,60 @@
   background-color: #00dddd;
 }
 
+#difficultyScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 700px;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  z-index: 15;
+  color: #00ffff;
+  text-align: center;
+}
+
+#difficultyScreen h2 {
+  font-size: 26px;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px black;
+}
+
+.difficulty-options {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.difficulty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.difficulty img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 4px #00ffff);
+}
+
+.difficulty p {
+  font-size: 18px;
+  color: #00ffff;
+}
+
+.difficulty:hover {
+  transform: scale(1.1);
+}
+
+
 
 
   </style>
@@ -345,6 +399,24 @@
         <canvas id="historyChart" width="360" height="200" style="margin: 20px 0;"></canvas>
         <button onclick="backToMenu()">Späť do menu</button>
       </div>
+      <div id="difficultyScreen">
+        <h2>Vyber si úroveň</h2>
+        <div class="difficulty-options">
+          <div class="difficulty" onclick="selectDifficulty('easy')">
+            <img src="https://cdn-icons-png.flaticon.com/512/168/168725.png" alt="Ľahká" />
+            <p>Ľahká</p>
+          </div>
+          <div class="difficulty" onclick="selectDifficulty('medium')">
+            <img src="https://cdn-icons-png.flaticon.com/512/168/168726.png" alt="Stredná" />
+            <p>Stredná</p>
+          </div>
+          <div class="difficulty" onclick="selectDifficulty('hard')">
+            <img src="https://cdn-icons-png.flaticon.com/512/168/168727.png" alt="Ťažká" />
+            <p>Ťažká</p>
+          </div>
+        </div>
+      </div>
+      
       
 
   <div id="game">
@@ -883,6 +955,19 @@ document.getElementById("settingsButton").addEventListener("click", () => {
 
 function closeSettings() {
   document.getElementById("settingsModal").style.display = "none";
+}
+
+document.getElementById("settingsButton").addEventListener("click", () => {
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("difficultyScreen").style.display = "flex";
+});
+
+function selectDifficulty(level) {
+  // Tu si môžeš nastaviť správanie podľa úrovne:
+  console.log("Vybraná úroveň:", level);
+  // Napr. nastav obtiažnosť a vráť sa späť:
+  document.getElementById("difficultyScreen").style.display = "none";
+  document.getElementById("menu").style.display = "flex";
 }
 
 
