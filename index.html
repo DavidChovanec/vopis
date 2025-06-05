@@ -62,7 +62,10 @@
     }
 
 
-
+    #menu {
+      display: flex; /* OPRAVENÉ */
+      z-index: 10; /* aby nič neprekrylo */
+    }
     
     #game, #menu, #gameOver {
       position: relative;
@@ -284,19 +287,18 @@
 </head>
 <body>
       
-    <div id="menu" style="display: flex; z-index: 10;">
+    <div id="menu">
         <h1>VOPIS</h1>
         <button onclick="startGame()">HRAŤ</button>
         <button onclick="showHistory()">História hier</button>
         <div id="settingsIcon" onclick="toggleDifficultyMenu()">⚙️</div>
-
-        <!--<div id="difficultyMenu">-->
+    
         <div class="difficulty-buttons">
-            <button class="difficulty-button" onclick="startGameWithDifficulty('easy')">Ľahká</button>
-            <button class="difficulty-button" onclick="startGameWithDifficulty('medium')">Stredná</button>
-            <button class="difficulty-button" onclick="startGameWithDifficulty('hard')">Ťažká</button>
+          <button class="difficulty-button" onclick="startGameWithDifficulty('easy')">Ľahká</button>
+          <button class="difficulty-button" onclick="startGameWithDifficulty('medium')">Stredná</button>
+          <button class="difficulty-button" onclick="startGameWithDifficulty('hard')">Ťažká</button>
         </div>
-        <!--</div>-->
+      </div>
 
       </div>
       
