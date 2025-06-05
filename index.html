@@ -335,15 +335,21 @@
         <button onclick="startGame()">HRAŤ</button>
         <button onclick="showHistory()">História hier</button> 
         
-  <div id="difficultySettings" onclick="toggleDifficultySettings()" style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 28px;">⚙️</div>
+        <div id="settingsIcon" onclick="openSettings()">⚙️</div>
+        </div>
+    
+        <div id="settingsPanel" style="display:none;" class="panel">
+            <h2>Nastavenie</h2>
+            <label for="difficulty">Obtiažnosť:</label>
+            <select id="difficulty">
+                <option value="easy">Ľahká</option>
+                <option value="normal" selected>Normálna</option>
+                <option value="hard">Ťažká</option>
+            </select>
+            <button onclick="closeSettings()">Späť</button>
+        </div>
 
-  <div id="difficultySettings" style="display: none; margin-top: 20px; flex-direction: row; gap: 10px;">
-    <button onclick="setDifficulty('easy')">Ľahká</button>
-    <button onclick="setDifficulty('medium')">Stredná</button>
-    <button onclick="setDifficulty('hard')">Ťažká</button>
-  </div>
-
-      </div>
+    </div>
 
       <div id="difficultySettings" style="display: none; flex-direction: column; align-items: center; gap: 20px;">
         <h2>Vyber si obtiažnosť</h2>
