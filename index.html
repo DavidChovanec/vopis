@@ -246,31 +246,33 @@
         right: 10px;
         cursor: pointer;
         padding: 5px;
-        border: 2px solid #00ffff; /* tyrkysový obrys */
+        border: 2px solid #00ffff;
         border-radius: 50%;
         background: transparent;
-        z-index: 20;
+        z-index: 10;
         transition: transform 0.2s ease;
     }
+
 
     #settingsButton:hover {
         transform: scale(1.1);
     }
 
     #settingsModal {
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  width: 250px;
-  background-color: rgba(0, 0, 0, 0.9);
-  border: 2px solid #00ffff;
-  border-radius: 12px;
-  padding: 15px;
-  display: none;
-  flex-direction: column;
-  z-index: 30;
-  color: white;
-}
+        position: absolute;
+        top: 50px;
+        right: 10px;
+        width: 250px;
+        background-color: rgba(0, 0, 0, 0.9);
+        border: 2px solid #00ffff;
+        border-radius: 12px;
+        padding: 15px;
+        display: none;
+        flex-direction: column;
+        z-index: 20;
+        color: white;
+    }
+
 
 #settingsModal input {
   padding: 10px;
@@ -304,11 +306,12 @@
 <body>
 
     <div id="settingsButton">
-        <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 24 24" width="32" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="3"/>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!--<circle cx="12" cy="12" r="3"/>-->
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
         </svg>
       </div>
+      
       <div id="settingsModal">
         <h2>Nastavenia</h2>
         <input type="text" placeholder="Sem môžeš niečo napísať..." />
