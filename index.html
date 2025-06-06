@@ -25,6 +25,16 @@
 
     #menu {
   position: relative; /* umožní absolútnu pozíciu potomkom */
+  position: relative;
+  width: 400px;
+  height: 700px;
+  border: 2px solid white;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  display: none; /* <- bude prepnuté na flex pri štarte */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
     
     #game, #menu, #gameOver {
@@ -967,6 +977,8 @@ function selectDifficulty(difficulty) {
 
 
     menu.style.display = "flex";
+    console.log("App loaded");
+console.log("Menu visible:", menu.style.display);
   </script>
 </body>
 </html>
