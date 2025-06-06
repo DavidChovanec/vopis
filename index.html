@@ -674,18 +674,34 @@ const hardWords = [
                         showLevelMessage(getRandomLevelMessage());
                     }
             }*/
-            if (difficultyMode !== "easy" && score % 5 === 0) {
+            if (score % 5 === 0) {
                 level++;
-                speed += speedIncrement;
+
+                if (difficultyMode === "medium") {
+                    speed += 0.15;
+                    if (spawnIntervalTime > 800) spawnIntervalTime -= 80;
+                }
+
+                else if (difficultyMode === "hard") {
+                    speed += 0.3;
+                    if (spawnIntervalTime > 400) spawnIntervalTime -= 120;
+                }
+
+                else if (difficultyMode === "normal") {
+                    speed += 0.2;
                     if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
+                }
+
+                // easy režim sa ignoruje – nič sa nemení
 
                 clearInterval(spawnInterval);
                 spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
 
-                    if ([4, 7, 15].includes(level)) {
-                        showLevelMessage(getRandomLevelMessage());
-                    }
-            }
+                if ([4, 7, 15].includes(level)) {
+                    showLevelMessage(getRandomLevelMessage());
+                }
+                }
+
 
 
             updateScoreboard();
