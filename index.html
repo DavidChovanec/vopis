@@ -332,19 +332,23 @@
 
 .difficulty-options {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   justify-content: center;
 }
 
 .difficulty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  padding: 12px 20px;
+  border: 2px solid #00ffff;
+  background-color: transparent;
+  color: #00ffff;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.difficulty img {
+/*.difficulty img {
   width: 64px;
   height: 64px;
   margin-bottom: 10px;
@@ -355,9 +359,10 @@
   font-size: 18px;
   color: #00ffff;
 }
-
+*/
 .difficulty:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+  background-color: rgba(0, 255, 255, 0.1);
 }
 
 
@@ -403,19 +408,11 @@
       <div id="difficultyScreen">
         <h2>Vyber si úroveň</h2>
         <div class="difficulty-options">
-          <div class="difficulty" onclick="selectDifficulty('easy')">
-            <img src="https://cdn-icons-png.flaticon.com/512/168/168725.png" alt="Ľahká" />
-            <p>Ľahká</p>
+            <button class="difficulty" onclick="selectDifficulty('easy')">Ľahká</button>
+            <button class="difficulty" onclick="selectDifficulty('medium')">Stredná</button>
+            <button class="difficulty" onclick="selectDifficulty('hard')">Ťažká</button>
           </div>
-          <div class="difficulty" onclick="selectDifficulty('medium')">
-            <img src="https://cdn-icons-png.flaticon.com/512/168/168726.png" alt="Stredná" />
-            <p>Stredná</p>
-          </div>
-          <div class="difficulty" onclick="selectDifficulty('hard')">
-            <img src="https://cdn-icons-png.flaticon.com/512/168/168727.png" alt="Ťažká" />
-            <p>Ťažká</p>
-          </div>
-        </div>
+          
       </div>
       
       
