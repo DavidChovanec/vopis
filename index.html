@@ -266,20 +266,6 @@
         background-color: rgba(0, 255, 255, 0.1); /* jemný efekt */
     }
 
-    #settingsModal {
-        position: absolute;
-        top: 50px;
-        right: 10px;
-        width: 250px;
-        background-color: rgba(0, 0, 0, 0.9);
-        border: 2px solid #00ffff;
-        border-radius: 12px;
-        padding: 15px;
-        display: none;
-        flex-direction: column;
-        z-index: 20;
-        color: white;
-    }
 
 
 #settingsModal input {
@@ -380,11 +366,7 @@
         </svg>
       </div>-->
       
-      <div id="settingsModal">
-        <h2>Nastavenia</h2>
-        <input type="text" placeholder="Sem môžeš niečo napísať..." />
-        <button onclick="closeSettings()">Zavrieť</button>
-      </div>
+
       
       
       
@@ -951,9 +933,6 @@ document.getElementById("settingsButton").addEventListener("click", () => {
   modal.style.display = modal.style.display === "flex" ? "none" : "flex";
 });
 
-function closeSettings() {
-  document.getElementById("settingsModal").style.display = "none";
-}
 
 document.getElementById("settingsButton").addEventListener("click", () => {
   document.getElementById("menu").style.display = "none";
