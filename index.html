@@ -521,6 +521,8 @@ const hardWords = [
     let speed = 1.0;
     let spawnInterval, moveInterval, bulletInterval;
     let spawnIntervalTime = 2000;
+    let difficultyMode = "normal"; // predvolené
+
 
     const gameArea = document.getElementById("game");
     const input = document.getElementById("textInput");
@@ -657,17 +659,16 @@ const hardWords = [
            
 
 
-            if (score % 5 === 0) {
-              level++;
-              speed += 0.2;
-              if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
-              clearInterval(spawnInterval);
-              spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
+            if (difficultyMode !== "easy" && score % 5 === 0) {
+                level++;
+                speed += 0.2;
+                if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
+                    clearInterval(spawnInterval);
+                    spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
 
-              // Zobrazenie správy podľa úrovne
-              if ([4, 7, 15].includes(level)) {
-                    showLevelMessage(getRandomLevelMessage());
-                }
+                    if ([4, 7, 15].includes(level)) {
+                        showLevelMessage(getRandomLevelMessage());
+                    }
             }
 
             updateScoreboard();
@@ -961,6 +962,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
 }
 */
 function selectDifficulty(difficulty) {
+    difficultyMode = "easy";
   if (difficulty === 'easy') {
     spawnIntervalTime = 4000; // pomalší spawn
     getWordByLevel = function () {
