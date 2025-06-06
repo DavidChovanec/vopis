@@ -966,7 +966,7 @@ function selectDifficulty(difficulty) {
   if (difficulty === 'easy') {
     spawnIntervalTime = 4000; // pomalší spawn
     getWordByLevel = function () {
-      let pool = [...easyWords, ...mediumWords];
+      let pool = [...easyWords];
       return pool[Math.floor(Math.random() * pool.length)];
     };
   }
