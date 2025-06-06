@@ -441,25 +441,25 @@
   "dom", "pes", "oko", "les", "hra", "kus", "lak", "typ", "vrt", "zub",
   "dar", "lup", "mat", "nos"
     ];
-    let getWordByLevel = function(level) {
+ /*   let getWordByLevel = function(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
   if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 };
-
+*/
 
 const mediumWords = [
   "ruka", "lampa", "slovo", "voda", "more", "kvet", "hory", "sirup", "mlieko", "list","strom", "vrece", "kabel", "kniha", "oblak", "svetlo", 
   "zmrzka", "tanier", "krava", "lopta", "lopata", "slon", "lano"
     ];
-    let getWordByLevel = function(level) {
+ /*   let getWordByLevel = function(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
   if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
 };
-
+*/
 
 const hardWords = [
   "mačka", "kamarat", "kniha", "cesta", "chlieb", "taburet", "počasie", "šarkan", "autobus",
@@ -977,8 +977,6 @@ function selectDifficulty(difficulty) {
 
 
     menu.style.display = "flex";
-    console.log("App loaded");
-console.log("Menu visible:", menu.style.display);
   </script>
 </body>
 </html>
