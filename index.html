@@ -661,7 +661,7 @@ const hardWords = [
 
             if (difficultyMode !== "easy" && score % 5 === 0) {
                 level++;
-                speed += 0.2;
+                speed += 0.3;
                 if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
                     clearInterval(spawnInterval);
                     spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
@@ -785,9 +785,9 @@ const hardWords = [
         
 
 
-        if (difficultyMode !== "easy" && score % 5 === 0) {
+        if (difficultyMode !== "easy" && ifficultyMode !== "medium" && ifficultyMode !== "hard" &&score % 5 === 0) {
           level++;
-          speed += 0.2;
+          speed += 0.3;
           if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
           clearInterval(spawnInterval);
           spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
@@ -971,7 +971,24 @@ function selectDifficulty(difficulty) {
     };
   }
 
-  // (neskôr môžeš doplniť 'medium' a 'hard')
+
+    difficultyMode = "medium";
+  if (difficulty === 'medium') {
+    spawnIntervalTime = 2500; // stredny spawn
+    getWordByLevel = function () {
+      let pool = [...easyWords, ...mediumWords];
+      return pool[Math.floor(Math.random() * pool.length)];
+    };
+    difficultyMode = "hard";
+  if (difficulty === 'hard') {
+    spawnIntervalTime = 1000; // rychly spawn
+    getWordByLevel = function () {
+      let pool = [ ...mediumWords, ...hardWords];
+      return pool[Math.floor(Math.random() * pool.length)];
+    };
+  }
+}
+
 
   document.getElementById("difficultyScreen").style.display = "none";
   startGame(); // spustí hru
