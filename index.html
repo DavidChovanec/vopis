@@ -431,34 +431,37 @@
   "dom", "pes", "oko", "les", "hra", "kus", "lak", "typ", "vrt", "zub",
   "dar", "lup", "mat", "nos"
     ];
-    function getWordByLevel(level) {
+    let getWordByLevel = function(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
   if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
-}
+};
+
 
 const mediumWords = [
   "ruka", "lampa", "slovo", "voda", "more", "kvet", "hory", "sirup", "mlieko", "list","strom", "vrece", "kabel", "kniha", "oblak", "svetlo", 
   "zmrzka", "tanier", "krava", "lopta", "lopata", "slon", "lano"
     ];
-    function getWordByLevel(level) {
+    let getWordByLevel = function(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
   if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
-}
+};
+
 
 const hardWords = [
   "mačka", "kamarat", "kniha", "cesta", "chlieb", "taburet", "počasie", "šarkan", "autobus",
   "bublina", "špagety", "žubrienka", "raketa", "dinosaurus", "kolobežka", "bublinka"
     ];
-    function getWordByLevel(level) {
+    let getWordByLevel = function(level) {
   let pool = [...easyWords];
   if (level >= 4) pool = pool.concat(mediumWords);
   if (level >= 15) pool = pool.concat(hardWords);
   return pool[Math.floor(Math.random() * pool.length)];
-}
+};
+
 
     const levelUpMessages = [
         "Bol si skvelý, trochu pritvrdíme...",
@@ -939,12 +942,39 @@ document.getElementById("settingsButton").addEventListener("click", () => {
   document.getElementById("difficultyScreen").style.display = "flex";
 });
 
-function selectDifficulty(level) {
+/*function selectDifficulty(level) {
   // Tu si môžeš nastaviť správanie podľa úrovne:
   console.log("Vybraná úroveň:", level);
   // Napr. nastav obtiažnosť a vráť sa späť:
   document.getElementById("difficultyScreen").style.display = "none";
   document.getElementById("menu").style.display = "flex";
+}
+*/
+function selectDifficulty(difficulty) {
+  if (difficulty === 'easy') {
+    spawnIntervalTime = 4000; // pomalší spawn
+    getWordByLevel = function () {
+      let pool = [...easyWords, ...mediumWords];
+      return pool[Math.floor(Math.random() * pool.length)];
+    };
+    if (difficulty === 'medium') {
+    spawnIntervalTime = 2500; // stredny spawn
+    getWordByLevel = function () {
+      let pool = [...easyWords, ...mediumWords];
+      return pool[Math.floor(Math.random() * pool.length)];
+    };
+    if (difficulty === 'hard') {
+    spawnIntervalTime = 1000; // rychly spawn
+    getWordByLevel = function () {
+      let pool = [...mediumWords, ...hardWords];
+      return pool[Math.floor(Math.random() * pool.length)];
+    };
+  }
+
+  // (neskôr môžeš doplniť 'medium' a 'hard')
+
+  document.getElementById("difficultyScreen").style.display = "none";
+  startGame(); // spustí hru
 }
 
 
