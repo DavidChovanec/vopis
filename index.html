@@ -556,7 +556,15 @@ const hardWords = [
       score = 0;
       if (difficultyMode === "normal") {
         speed = 1.0;
-      }
+        spawnIntervalTime = 2000;
+            getWordByLevel = function(level) {
+                    let pool = [...easyWords];
+                    if (level >= 4) pool = pool.concat(mediumWords);
+                    if (level >= 15) pool = pool.concat(hardWords);
+                    return pool[Math.floor(Math.random() * pool.length)];
+            };
+        }
+
 
       spawnIntervalTime = 3500;
       input.value = "";
