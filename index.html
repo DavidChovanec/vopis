@@ -1008,7 +1008,7 @@ function selectDifficulty(difficulty) {
 
   else if (difficulty === 'medium') {
     spawnIntervalTime = 2500; // rýchlejší spawn
-    speed= 1.4;
+    speed= 2.0;
     //speed += 0.4;
     getWordByLevel = function () {
       let pool = [...easyWords, ...mediumWords];
@@ -1018,7 +1018,7 @@ function selectDifficulty(difficulty) {
 
   else if (difficulty === 'hard') {
     spawnIntervalTime = 1200; // ešte rýchlejší spawn
-    speed = 1.8;
+    speed = 3.0;
     //speed += 0.8;
     getWordByLevel = function () {
       let pool = [...mediumWords, ...hardWords];
