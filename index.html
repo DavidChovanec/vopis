@@ -435,6 +435,8 @@
     let backgroundSpeed = 1.2; // počiatočná rýchlosť
     let targetBackgroundSpeed = 1.2;
     let backgroundAnimationRunning = false;
+    let difficultyMode = "default"; // nie "easy", "medium", "hard"
+    let speedIncrement = 0.3;       // predvolený inkrement
 
 
     const easyWords = [
@@ -548,6 +550,8 @@ const hardWords = [
       menu.style.display = "none";
       gameOverScreen.style.display = "none";
       gameArea.style.display = "flex";
+      speedIncrement = 0.3;
+      difficultyMode = "default";
       level = 1;
       score = 0;
       speed = 1.0;
@@ -659,7 +663,7 @@ const hardWords = [
            
 
 
-            if (difficultyMode !== "easy" && score % 5 === 0) {
+           /* if (difficultyMode !== "easy" && score % 5 === 0) {
                 level++;
                 speed += 0.3;
                 if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
@@ -669,7 +673,20 @@ const hardWords = [
                     if ([4, 7, 15].includes(level)) {
                         showLevelMessage(getRandomLevelMessage());
                     }
+            }*/
+            if (difficultyMode !== "easy" && score % 5 === 0) {
+                level++;
+                speed += speedIncrement;
+                    if (spawnIntervalTime > 500) spawnIntervalTime -= 100;
+
+                clearInterval(spawnInterval);
+                spawnInterval = setInterval(spawnEnemy, spawnIntervalTime);
+
+                    if ([4, 7, 15].includes(level)) {
+                        showLevelMessage(getRandomLevelMessage());
+                    }
             }
+
 
             updateScoreboard();
             return;
