@@ -554,7 +554,10 @@ const hardWords = [
       //difficultyMode = "default";
       level = 1;
       score = 0;
-      speed = 1.0;
+      if (difficultyMode === "normal") {
+        speed = 1.0;
+      }
+
       spawnIntervalTime = 3500;
       input.value = "";
       input.focus(); // rovno pises 
