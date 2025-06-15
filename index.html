@@ -1,3 +1,5 @@
+//funguje dobre ******************--------------------// 
+
 <!DOCTYPE html>
 <html lang="sk">
 <head>
@@ -400,7 +402,7 @@
               <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
             </svg>
           </div>
-          <button onclick="resetDifficultyAndStart()">HRAŤ</button>
+        <button onclick="startGame()">HRAŤ</button>
         <button onclick="showHistory()">História hier</button>
       </div>
       
@@ -566,9 +568,6 @@ const hardWords = [
       //difficultyMode = "default";
       level = 1;
       score = 0;
-      if (!['easy', 'medium', 'hard'].includes(difficultyMode)) {
-  difficultyMode = 'normal';  // ak nebola žiadna obtiažnosť vybraná
-}
       if (difficultyMode === "normal") {
         speed = 1.0;
         spawnIntervalTime = 2000;
@@ -870,15 +869,13 @@ const hardWords = [
 function saveGameToHistory(score, level) {
   const history = JSON.parse(sessionStorage.getItem("gameHistory")) || [];
   const now = new Date();
-  history.push({
+  history.push({  // <-- zmena tu!
     date: now.toLocaleString("sk-SK"),
     score: score,
-    level: level,
-    difficulty: difficultyMode || "null"  // ← pridaná kontrola fallbacku
+    level: level
   });
   sessionStorage.setItem("gameHistory", JSON.stringify(history));
 }
-
 
 
 
@@ -899,8 +896,7 @@ function showHistory() {
   } else {
     history.forEach((entry, index) => {
       const li = document.createElement("li");
-      li.textContent = `Skóre: ${entry.score}, Úroveň: ${entry.level}, Obtiažnosť: ${entry.difficulty}`;
-
+      li.textContent = ` Skóre: ${entry.score}, Úroveň: ${entry.level}`;
       list.appendChild(li);
     });
   }
@@ -919,51 +915,23 @@ function drawChart() {
   }
 
   const labels = history.map((_, i) => `Hra #${i + 1}`);
-
-  // rozdelenie skóre podľa obtiažnosti, ale všetky budú mať rovnaký počet bodov
-  const easyScores = history.map(h => h.difficulty === 'easy' ? h.score : null);
-  const mediumScores = history.map(h => h.difficulty === 'medium' ? h.score : null);
-  const hardScores = history.map(h => h.difficulty === 'hard' ? h.score : null);
+  const scores = history.map(entry => entry.score);
 
   chartInstance = new Chart(ctx, {
     type: 'line',
     data: {
       labels: labels,
-      datasets: [
-        {
-          label: 'Ľahká',
-          data: easyScores,
-          borderColor: 'green',
-          backgroundColor: 'rgba(0, 128, 0, 0.2)',
-          fill: true,
-          borderWidth: 2,
-          tension: 0.3,
-          pointBackgroundColor: 'green',
-          pointRadius: 4
-        },
-        {
-          label: 'Stredná',
-          data: mediumScores,
-          borderColor: 'blue',
-          backgroundColor: 'rgba(0, 0, 255, 0.2)',
-          fill: true,
-          borderWidth: 2,
-          tension: 0.3,
-          pointBackgroundColor: 'blue',
-          pointRadius: 4
-        },
-        {
-          label: 'Ťažká',
-          data: hardScores,
-          borderColor: 'red',
-          backgroundColor: 'rgba(255, 0, 0, 0.2)',
-          fill: true,
-          borderWidth: 2,
-          tension: 0.3,
-          pointBackgroundColor: 'red',
-          pointRadius: 4
-        }
-      ]
+      datasets: [{
+        label: 'Skóre (správne slová)',
+        data: scores,
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)', // výplň pod krivkou
+        fill: true, // aktivuje výplň
+        borderWidth: 2,
+        tension: 0.3,
+        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+        pointRadius: 4
+      }]
     },
     options: {
       responsive: true,
@@ -978,18 +946,13 @@ function drawChart() {
         x: {
           title: {
             display: true,
-            text: 'Poradie hier'
+            text: 'Číslo hry'
           }
         }
       }
     }
   });
 }
-
-
-
-
-
 
 function animateEnemiesAway() {
   const center = gameArea.clientWidth / 2;
@@ -1094,12 +1057,6 @@ function selectDifficulty(difficulty) {
 
 
     menu.style.display = "flex";
-    
-    function resetDifficultyAndStart() {
-  difficultyMode = "normal";  // obnovíme default
-  startGame();                // spustíme pôvodnú hru
-}
-
   </script>
 </body>
 </html>
