@@ -871,7 +871,7 @@ function saveGameToHistory(score, level) {
     date: now.toLocaleString("sk-SK"),
     score: score,
     level: level,
-    difficulty: difficultyMode || "unknown"  // ← pridaná kontrola fallbacku
+    difficulty: difficultyMode || "null"  // ← pridaná kontrola fallbacku
   });
   sessionStorage.setItem("gameHistory", JSON.stringify(history));
 }
@@ -913,59 +913,101 @@ function drawChart() {
 
   if (chartInstance) chartInstance.destroy();
 
-  const easy = history.filter(h => h.difficulty === 'easy');
-  const medium = history.filter(h => h.difficulty === 'medium');
-  const hard = history.filter(h => h.difficulty === 'hard');
+  const hasDifficulty = history.some(h => h.difficulty); // zistíme, či existujú záznamy s obtiažnosťou
 
-  function toDataset(data, label, color) {
-    return {
-      label: label,
-      data: data.map((h, i) => ({
-        x: `Hra #${history.indexOf(h) + 1}`,
-        y: h.score
-      })),
-      borderColor: color,
-      backgroundColor: color + '33',
-      fill: true,
-      borderWidth: 2,
-      tension: 0.3,
-      pointRadius: 4,
-      pointBackgroundColor: color
-    };
-  }
-
-  chartInstance = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: history.map((_, i) => `Hra #${i + 1}`),
-      datasets: [
-        toDataset(easy, 'Ľahká', 'green'),
-        toDataset(medium, 'Stredná', 'blue'),
-        toDataset(hard, 'Ťažká', 'red'),
-      ]
-    },
-    options: {
-      responsive: true,
-      parsing: false,  // <- dôležité: lebo používame {x, y} objekty
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: 'Počet správnych slov'
-          }
-        },
-        x: {
-          type: 'category',
-          title: {
-            display: true,
-            text: 'Číslo hry'
+  if (!hasDifficulty) {
+    // 🔵 Pôvodný jednoduchý graf (žiadna obtiažnosť nebola zvolená)
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: history.map((_, i) => `Hra #${i + 1}`),
+        datasets: [{
+          label: 'Skóre (správne slová)',
+          data: history.map(h => h.score),
+          borderColor: 'cyan',
+          backgroundColor: 'rgba(0,255,255,0.2)',
+          fill: true,
+          borderWidth: 2,
+          tension: 0.3,
+          pointRadius: 4,
+          pointBackgroundColor: 'cyan'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Počet správnych slov'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Číslo hry'
+            }
           }
         }
       }
+    });
+  } else {
+    // 🌈 Graf rozdelený podľa obtiažnosti
+    const easy = history.filter(h => h.difficulty === 'easy');
+    const medium = history.filter(h => h.difficulty === 'medium');
+    const hard = history.filter(h => h.difficulty === 'hard');
+
+    function toDataset(data, label, color) {
+      return {
+        label: label,
+        data: data.map(h => ({
+          x: `Hra #${history.indexOf(h) + 1}`,
+          y: h.score
+        })),
+        borderColor: color,
+        backgroundColor: color + '33',
+        fill: true,
+        borderWidth: 2,
+        tension: 0.3,
+        pointRadius: 4,
+        pointBackgroundColor: color
+      };
     }
-  });
+
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        datasets: [
+          toDataset(easy, 'Ľahká', 'green'),
+          toDataset(medium, 'Stredná', 'blue'),
+          toDataset(hard, 'Ťažká', 'red'),
+        ]
+      },
+      options: {
+        responsive: true,
+        parsing: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Počet správnych slov'
+            }
+          },
+          x: {
+            type: 'category',
+            title: {
+              display: true,
+              text: 'Hry (podľa poradia)'
+            }
+          }
+        }
+      }
+    });
+  }
 }
+
 
 
 
