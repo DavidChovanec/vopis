@@ -566,6 +566,9 @@ const hardWords = [
       //difficultyMode = "default";
       level = 1;
       score = 0;
+      if (!['easy', 'medium', 'hard'].includes(difficultyMode)) {
+  difficultyMode = 'normal';  // ak nebola žiadna obtiažnosť vybraná
+}
       if (difficultyMode === "normal") {
         speed = 1.0;
         spawnIntervalTime = 2000;
@@ -976,35 +979,36 @@ function drawChart() {
     }
 
     chartInstance = new Chart(ctx, {
-      type: 'line',
-      data: {
-        datasets: [
-          toDataset(easy, 'Ľahká', 'green'),
-          toDataset(medium, 'Stredná', 'blue'),
-          toDataset(hard, 'Ťažká', 'red'),
-        ]
+  type: 'line',
+  data: {
+    datasets: [
+      easy.length ? toDataset(easy, 'Ľahká', 'green') : null,
+      medium.length ? toDataset(medium, 'Stredná', 'blue') : null,
+      hard.length ? toDataset(hard, 'Ťažká', 'red') : null
+    ].filter(Boolean)
+  },
+  options: {
+    responsive: true,
+    parsing: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Počet správnych slov'
+        }
       },
-      options: {
-        responsive: true,
-        parsing: false,
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Počet správnych slov'
-            }
-          },
-          x: {
-            type: 'category',
-            title: {
-              display: true,
-              text: 'Hry (podľa poradia)'
-            }
-          }
+      x: {
+        type: 'category',
+        title: {
+          display: true,
+          text: 'Hry (podľa poradia)'
         }
       }
-    });
+    }
+  }
+});
+
   }
 }
 
