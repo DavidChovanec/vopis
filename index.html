@@ -896,7 +896,8 @@ function showHistory() {
   } else {
     history.forEach((entry, index) => {
       const li = document.createElement("li");
-      li.textContent = ` Skóre: ${entry.score}, Úroveň: ${entry.level}`;
+      li.textContent = `Skóre: ${entry.score}, Úroveň: ${entry.level}, Obtiažnosť: ${entry.difficulty}`;
+
       list.appendChild(li);
     });
   }
@@ -919,7 +920,10 @@ function drawChart() {
   function toDataset(data, label, color) {
     return {
       label: label,
-      data: data.map(h => h.score),
+      data: data.map((h, i) => ({
+        x: `Hra #${history.indexOf(h) + 1}`,
+        y: h.score
+      })),
       borderColor: color,
       backgroundColor: color + '33',
       fill: true,
@@ -942,6 +946,7 @@ function drawChart() {
     },
     options: {
       responsive: true,
+      parsing: false,  // <- dôležité: lebo používame {x, y} objekty
       scales: {
         y: {
           beginAtZero: true,
@@ -951,6 +956,7 @@ function drawChart() {
           }
         },
         x: {
+          type: 'category',
           title: {
             display: true,
             text: 'Číslo hry'
@@ -960,6 +966,7 @@ function drawChart() {
     }
   });
 }
+
 
 
 function animateEnemiesAway() {
