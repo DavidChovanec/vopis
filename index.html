@@ -867,13 +867,15 @@ const hardWords = [
 function saveGameToHistory(score, level) {
   const history = JSON.parse(sessionStorage.getItem("gameHistory")) || [];
   const now = new Date();
-  history.push({  // <-- zmena tu!
+  history.push({
     date: now.toLocaleString("sk-SK"),
     score: score,
-    level: level
+    level: level,
+    difficulty: difficultyMode || "unknown"  // ← pridaná kontrola fallbacku
   });
   sessionStorage.setItem("gameHistory", JSON.stringify(history));
 }
+
 
 
 
@@ -908,28 +910,35 @@ function drawChart() {
   const ctx = document.getElementById('historyChart').getContext('2d');
   const history = JSON.parse(sessionStorage.getItem("gameHistory")) || [];
 
-  if (chartInstance) {
-    chartInstance.destroy();
-  }
+  if (chartInstance) chartInstance.destroy();
 
-  const labels = history.map((_, i) => `Hra #${i + 1}`);
-  const scores = history.map(entry => entry.score);
+  const easy = history.filter(h => h.difficulty === 'easy');
+  const medium = history.filter(h => h.difficulty === 'medium');
+  const hard = history.filter(h => h.difficulty === 'hard');
+
+  function toDataset(data, label, color) {
+    return {
+      label: label,
+      data: data.map(h => h.score),
+      borderColor: color,
+      backgroundColor: color + '33',
+      fill: true,
+      borderWidth: 2,
+      tension: 0.3,
+      pointRadius: 4,
+      pointBackgroundColor: color
+    };
+  }
 
   chartInstance = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: labels,
-      datasets: [{
-        label: 'Skóre (správne slová)',
-        data: scores,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)', // výplň pod krivkou
-        fill: true, // aktivuje výplň
-        borderWidth: 2,
-        tension: 0.3,
-        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-        pointRadius: 4
-      }]
+      labels: history.map((_, i) => `Hra #${i + 1}`),
+      datasets: [
+        toDataset(easy, 'Ľahká', 'green'),
+        toDataset(medium, 'Stredná', 'blue'),
+        toDataset(hard, 'Ťažká', 'red'),
+      ]
     },
     options: {
       responsive: true,
@@ -951,6 +960,7 @@ function drawChart() {
     }
   });
 }
+
 
 function animateEnemiesAway() {
   const center = gameArea.clientWidth / 2;
