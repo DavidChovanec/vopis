@@ -916,10 +916,10 @@ function drawChart() {
 
   if (chartInstance) chartInstance.destroy();
 
-  const hasDifficulty = history.some(h => h.difficulty); // zistíme, či existujú záznamy s obtiažnosťou
+  const hasDifficulty = history.some(h => h.difficulty);
 
   if (!hasDifficulty) {
-    // 🔵 Pôvodný jednoduchý graf (žiadna obtiažnosť nebola zvolená)
+    // Ak nie sú rozdelené obtiažnosti, zobraz pôvodný jednoduchý graf
     chartInstance = new Chart(ctx, {
       type: 'line',
       data: {
@@ -955,61 +955,58 @@ function drawChart() {
         }
       }
     });
-  } else {
-    // 🌈 Graf rozdelený podľa obtiažnosti
-    const easy = history.filter(h => h.difficulty === 'easy');
-    const medium = history.filter(h => h.difficulty === 'medium');
-    const hard = history.filter(h => h.difficulty === 'hard');
+    return;
+  }
 
-    function toDataset(data, label, color) {
-      return {
-        label: label,
-        data: data.map(h => ({
-          x: `Hra #${history.indexOf(h) + 1}`,
-          y: h.score
-        })),
-        borderColor: color,
-        backgroundColor: color + '33',
-        fill: true,
-        borderWidth: 2,
-        tension: 0.3,
-        pointRadius: 4,
-        pointBackgroundColor: color
-      };
-    }
+  // 🔄 rozdelenie podľa obtiažností
+  const easy = history.map((h, i) => h.difficulty === 'easy'   ? { x: `Hra #${i + 1}`, y: h.score } : null).filter(Boolean);
+  const medium = history.map((h, i) => h.difficulty === 'medium' ? { x: `Hra #${i + 1}`, y: h.score } : null).filter(Boolean);
+  const hard = history.map((h, i) => h.difficulty === 'hard'   ? { x: `Hra #${i + 1}`, y: h.score } : null).filter(Boolean);
 
-    chartInstance = new Chart(ctx, {
-  type: 'line',
-  data: {
-    datasets: [
-      easy.length ? toDataset(easy, 'Ľahká', 'green') : null,
-      medium.length ? toDataset(medium, 'Stredná', 'blue') : null,
-      hard.length ? toDataset(hard, 'Ťažká', 'red') : null
-    ].filter(Boolean)
-  },
-  options: {
-    responsive: true,
-    parsing: false,
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Počet správnych slov'
-        }
-      },
-      x: {
-        type: 'category',
-        title: {
-          display: true,
-          text: 'Hry (podľa poradia)'
+  function toDataset(data, label, color) {
+    return {
+      label: label,
+      data: data,
+      borderColor: color,
+      backgroundColor: color + '33',
+      fill: true,
+      borderWidth: 2,
+      tension: 0.3,
+      pointRadius: 4,
+      pointBackgroundColor: color
+    };
+  }
+
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [
+        easy.length   ? toDataset(easy, 'Ľahká', 'green') : null,
+        medium.length ? toDataset(medium, 'Stredná', 'blue') : null,
+        hard.length   ? toDataset(hard, 'Ťažká', 'red') : null
+      ].filter(Boolean)
+    },
+    options: {
+      responsive: true,
+      parsing: false, // dôležité – berie {x, y}
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Počet správnych slov'
+          }
+        },
+        x: {
+          type: 'category',
+          title: {
+            display: true,
+            text: 'Hry (v poradí)'
+          }
         }
       }
     }
-  }
-});
-
-  }
+  });
 }
 
 
