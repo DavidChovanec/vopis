@@ -1,5 +1,3 @@
-//funguje dobre ******************--------------------// 
-
 <!DOCTYPE html>
 <html lang="sk">
 <head>
@@ -1054,14 +1052,22 @@ function selectDifficulty(difficulty) {
   document.getElementById("difficultyScreen").style.display = "none";
   startGame(); // spustí hru
 }
+function showScreen(screenName) {
+  const allScreens = ["menu", "game", "gameOver", "history", "difficultyScreen"];
+  allScreens.forEach(id => {
+    document.getElementById(id).style.display = (id === screenName) ? "flex" : "none";
+  });
 
-// Zabezpečí, že keď sa stlačí šípka späť/dopredu v prehliadači
+  // Push do histórie (ak to nie je návrat späť)
+  if (location.hash !== `#${screenName}`) {
+    history.pushState({ screen: screenName }, "", `#${screenName}`);
+  }
+}
+
 window.addEventListener("popstate", (event) => {
   const screen = event.state?.screen || "menu";
   showScreen(screen);
 });
-
-// Pri načítaní stránky – zobrazí obrazovku podľa hash-u (napr. #history)
 window.addEventListener("load", () => {
   const hash = location.hash.replace("#", "") || "menu";
   showScreen(hash);
