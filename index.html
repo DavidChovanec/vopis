@@ -914,94 +914,59 @@ function drawChart() {
   const ctx = document.getElementById('historyChart').getContext('2d');
   const history = JSON.parse(sessionStorage.getItem("gameHistory")) || [];
 
-  if (chartInstance) chartInstance.destroy();
-
-  const hasDifficulty = history.some(h => h.difficulty);
-
-  if (!hasDifficulty) {
-    // klasický fallback, ak ešte neboli žiadne hry s obtiažnosťou
-    chartInstance = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: history.map((_, i) => `Hra #${i + 1}`),
-        datasets: [{
-          label: 'Skóre (všetky hry)',
-          data: history.map(h => h.score),
-          borderColor: 'cyan',
-          backgroundColor: 'rgba(0,255,255,0.2)',
-          fill: true,
-          borderWidth: 2,
-          tension: 0.3,
-          pointRadius: 4,
-          pointBackgroundColor: 'cyan'
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Počet správnych slov'
-            }
-          },
-          x: {
-            type: 'category',
-            title: {
-              display: true,
-              text: 'Poradie hier (v rámci úrovne)'
-            }
-          }
-        }
-      }
-    });
-    return;
+  if (chartInstance) {
+    chartInstance.destroy();
   }
 
-  // 👇 Vygenerujeme dátové sady s číslovaním od 1 pre každú obtiažnosť
-  const easy = [];
-  const medium = [];
-  const hard = [];
+  const labels = history.map((_, i) => `Hra #${i + 1}`);
 
-  let easyIndex = 1, mediumIndex = 1, hardIndex = 1;
-
-  history.forEach(h => {
-    if (h.difficulty === 'easy') {
-      easy.push({ x: `Hra #${easyIndex++}`, y: h.score });
-    } else if (h.difficulty === 'medium') {
-      medium.push({ x: `Hra #${mediumIndex++}`, y: h.score });
-    } else if (h.difficulty === 'hard') {
-      hard.push({ x: `Hra #${hardIndex++}`, y: h.score });
-    }
-  });
-
-  function toDataset(data, label, color) {
-    return {
-      label: label,
-      data: data,
-      borderColor: color,
-      //backgroundColor: color + '33',
-      //fill: true,
-      borderWidth: 2,
-      tension: 0.3,
-      pointRadius: 4,
-      pointBackgroundColor: color
-    };
-  }
+  // rozdelenie skóre podľa obtiažnosti, ale všetky budú mať rovnaký počet bodov
+  const easyScores = history.map(h => h.difficulty === 'easy' ? h.score : null);
+  const mediumScores = history.map(h => h.difficulty === 'medium' ? h.score : null);
+  const hardScores = history.map(h => h.difficulty === 'hard' ? h.score : null);
 
   chartInstance = new Chart(ctx, {
     type: 'line',
     data: {
+      labels: labels,
       datasets: [
-        easy.length   ? toDataset(easy, 'Ľahká', 'green') : null,
-        medium.length ? toDataset(medium, 'Stredná', 'blue') : null,
-        hard.length   ? toDataset(hard, 'Ťažká', 'red') : null
-      ].filter(Boolean)
+        {
+          label: 'Ľahká',
+          data: easyScores,
+          borderColor: 'green',
+          backgroundColor: 'rgba(0, 128, 0, 0.2)',
+          fill: true,
+          borderWidth: 2,
+          tension: 0.3,
+          pointBackgroundColor: 'green',
+          pointRadius: 4
+        },
+        {
+          label: 'Stredná',
+          data: mediumScores,
+          borderColor: 'blue',
+          backgroundColor: 'rgba(0, 0, 255, 0.2)',
+          fill: true,
+          borderWidth: 2,
+          tension: 0.3,
+          pointBackgroundColor: 'blue',
+          pointRadius: 4
+        },
+        {
+          label: 'Ťažká',
+          data: hardScores,
+          borderColor: 'red',
+          backgroundColor: 'rgba(255, 0, 0, 0.2)',
+          fill: true,
+          borderWidth: 2,
+          tension: 0.3,
+          pointBackgroundColor: 'red',
+          pointRadius: 4
+        }
+      ]
     },
     options: {
       responsive: true,
-      parsing: false, // <- dôležité
       scales: {
         y: {
           beginAtZero: true,
@@ -1011,10 +976,9 @@ function drawChart() {
           }
         },
         x: {
-          type: 'category',
           title: {
             display: true,
-            text: 'Poradie hier v úrovni'
+            text: 'Poradie hier'
           }
         }
       }
