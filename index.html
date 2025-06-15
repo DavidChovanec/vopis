@@ -916,14 +916,20 @@ function drawChart() {
 
   if (chartInstance) chartInstance.destroy();
 
+  const labels = history.map((_, i) => `Hra #${i + 1}`);
+
+  const easyScores = history.map(h => h.difficulty === 'easy' ? h.score : null);
+  const mediumScores = history.map(h => h.difficulty === 'medium' ? h.score : null);
+  const hardScores = history.map(h => h.difficulty === 'hard' ? h.score : null);
+
   const hasDifficulty = history.some(h => h.difficulty);
 
   if (!hasDifficulty) {
-    // Ak nie sú rozdelené obtiažnosti, zobraz pôvodný jednoduchý graf
+    // ak nie sú rozdelené obtiažnosti, zobraz klasický jeden dataset
     chartInstance = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: history.map((_, i) => `Hra #${i + 1}`),
+        labels: labels,
         datasets: [{
           label: 'Skóre (správne slová)',
           data: history.map(h => h.score),
@@ -949,7 +955,7 @@ function drawChart() {
           x: {
             title: {
               display: true,
-              text: 'Číslo hry'
+              text: 'Poradie hier'
             }
           }
         }
@@ -958,37 +964,48 @@ function drawChart() {
     return;
   }
 
-  // 🔄 rozdelenie podľa obtiažností
-  const easy = history.map((h, i) => h.difficulty === 'easy'   ? { x: `Hra #${i + 1}`, y: h.score } : null).filter(Boolean);
-  const medium = history.map((h, i) => h.difficulty === 'medium' ? { x: `Hra #${i + 1}`, y: h.score } : null).filter(Boolean);
-  const hard = history.map((h, i) => h.difficulty === 'hard'   ? { x: `Hra #${i + 1}`, y: h.score } : null).filter(Boolean);
-
-  function toDataset(data, label, color) {
-    return {
-      label: label,
-      data: data,
-      borderColor: color,
-      backgroundColor: color + '33',
-      fill: true,
-      borderWidth: 2,
-      tension: 0.3,
-      pointRadius: 4,
-      pointBackgroundColor: color
-    };
-  }
-
   chartInstance = new Chart(ctx, {
     type: 'line',
     data: {
+      labels: labels,
       datasets: [
-        easy.length   ? toDataset(easy, 'Ľahká', 'green') : null,
-        medium.length ? toDataset(medium, 'Stredná', 'blue') : null,
-        hard.length   ? toDataset(hard, 'Ťažká', 'red') : null
-      ].filter(Boolean)
+        {
+          label: 'Ľahká',
+          data: easyScores,
+          borderColor: 'green',
+          backgroundColor: 'rgba(0,128,0,0.2)',
+          fill: true,
+          borderWidth: 2,
+          tension: 0.3,
+          pointRadius: 4,
+          pointBackgroundColor: 'green'
+        },
+        {
+          label: 'Stredná',
+          data: mediumScores,
+          borderColor: 'blue',
+          backgroundColor: 'rgba(0,0,255,0.2)',
+          fill: true,
+          borderWidth: 2,
+          tension: 0.3,
+          pointRadius: 4,
+          pointBackgroundColor: 'blue'
+        },
+        {
+          label: 'Ťažká',
+          data: hardScores,
+          borderColor: 'red',
+          backgroundColor: 'rgba(255,0,0,0.2)',
+          fill: true,
+          borderWidth: 2,
+          tension: 0.3,
+          pointRadius: 4,
+          pointBackgroundColor: 'red'
+        }
+      ]
     },
     options: {
       responsive: true,
-      parsing: false, // dôležité – berie {x, y}
       scales: {
         y: {
           beginAtZero: true,
@@ -998,16 +1015,16 @@ function drawChart() {
           }
         },
         x: {
-          type: 'category',
           title: {
             display: true,
-            text: 'Hry (v poradí)'
+            text: 'Hra #'
           }
         }
       }
     }
   });
 }
+
 
 
 
